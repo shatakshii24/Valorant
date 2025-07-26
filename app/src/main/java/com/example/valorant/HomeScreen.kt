@@ -2,7 +2,6 @@ package com.example.valorant
 
 import android.net.Uri
 import android.view.ViewGroup
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -10,14 +9,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
+import androidx.media3.ui.AspectRatioFrameLayout
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -41,12 +41,13 @@ fun HomeScreen(navController: NavController) {
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // 🎬 Background Video Layer
+
         AndroidView(
             factory = {
                 PlayerView(context).apply {
                     this.player = player
                     useController = false
+                    resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
                     layoutParams = ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
@@ -56,33 +57,33 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier.fillMaxSize()
         )
 
+        // 🟦 Clean Button on Top-Left
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 24.dp, vertical = 16.dp) // side + top padding
+                .padding(horizontal = 24.dp, vertical = 16.dp)
         ) {
             Button(
                 onClick = { navController.navigate("agents") },
                 modifier = Modifier
-                    .align(Alignment.TopStart) // 🛸 TOP CENTER ALIGNMENT
-                    .padding(top = 110.dp), // 🎯 push down a bit from the top
+                    .align(Alignment.TopStart)
+                    .padding(top = 110.dp),
                 elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = 12.dp,
-                    pressedElevation = 8.dp
+                    defaultElevation = 8.dp,
+                    pressedElevation = 4.dp
                 ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF000000), // 🔥 red-hot queen
-                    contentColor = MaterialTheme.colorScheme.onPrimary
+                    containerColor = Color.Black,
+                    contentColor = Color.White
                 ),
-                shape = MaterialTheme.shapes.large
+                shape = MaterialTheme.shapes.medium
             ) {
                 Text(
-                    text = "View Agents" ,
-                fontWeight = FontWeight.ExtraBold
+                    text = "View Agents",
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 20.sp
                 )
             }
         }
-
-
     }
 }
